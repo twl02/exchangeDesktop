@@ -58,28 +58,31 @@ public class Parent implements Initializable, OnPageCompleteListener{
     }
 
     private void updateNavigation() {
-        boolean authenticated = Authentication.getInstance().getToken() !=
-                null;
-
-        if(authenticated) {
+        if(isAuthenticated()) {
             isTeller = isTeller();
         }
-        transactionButton.setManaged(authenticated);
-        transactionButton.setVisible(authenticated);
-        loginButton.setManaged(!authenticated);
-        loginButton.setVisible(!authenticated);
-        registerButton.setManaged(!authenticated);
-        registerButton.setVisible(!authenticated);
-        logoutButton.setManaged(authenticated);
-        logoutButton.setVisible(authenticated);
-        pendingRequestsButton.setManaged(authenticated);
-        pendingRequestsButton.setVisible(authenticated);
-        offersButton.setManaged(authenticated && isTeller);
-        offersButton.setVisible(authenticated && isTeller);
+        transactionButton.setManaged(isAuthenticated() && isTeller());
+        transactionButton.setVisible(isAuthenticated() && isTeller());
+        loginButton.setManaged(!isAuthenticated());
+        loginButton.setVisible(!isAuthenticated());
+        registerButton.setManaged(!isAuthenticated());
+        registerButton.setVisible(!isAuthenticated());
+        logoutButton.setManaged(isAuthenticated());
+        logoutButton.setVisible(isAuthenticated());
+        pendingRequestsButton.setManaged(isAuthenticated());
+        pendingRequestsButton.setVisible(isAuthenticated());
+        offersButton.setManaged(isAuthenticated() && isTeller());
+        offersButton.setVisible(isAuthenticated() && isTeller());
 
     }
 
-    private static boolean isTeller() {
+    public static boolean isAuthenticated() {
+        boolean authenticated = Authentication.getInstance().getToken() !=
+                null;
+        return authenticated;
+    }
+
+    public static boolean isTeller() {
         //Code to check if Teller
         String[] chunks = Authentication.getInstance().getToken().split("\\.");
         Base64.Decoder decoder = Base64.getUrlDecoder();

@@ -7,7 +7,7 @@ import retrofit2.http.*;
 import java.util.List;
 
 public interface Exchange {
-    @POST("/user/")
+    @POST("/user")
     Call<User> addUser(@Body User user);
     @POST("/user/authenticate")
     Call<Token> authenticate(@Body User user);
@@ -24,26 +24,28 @@ public interface Exchange {
     Call<List<DailyRate>> getDailyRates(@Query("startDay") String startDay, @Query("endDay") String endDay);
 
     @GET("/offers")
-    Call<List<TransactionRequest>> getOffers(@Query("request_id") Integer requestId, @Header("Authorization") String authorization);
+    Call<TransactionRequest> getOffers(@Query("request-id") Integer requestId, @Header("Authorization") String authorization);
+    @GET("/offers")
+    Call<List<TransactionRequest>> getOffers( @Header("Authorization") String authorization);
 
     @POST("/offer")
-    Call<TransactionRequest> newOffer(@Body Transaction transaction,///////////////////////////////////////
-                                @Header("Authorization") String authorization);////////////////////////////////////////////////////////////////////////////////////////////////////
+    Call<Offer> newOffer(@Body Offer offer,
+                                @Header("Authorization") String authorization);
     @DELETE("/offer")
-    Call<TransactionRequest> deleteOffer(@Query("offer_id") Integer offerId,
+    Call<TransactionRequest> deleteOffer(@Query("offer-id") Integer offerId,
                              @Header("Authorization") String authorization);
 
     @POST("/offer/accept")
-    Call<TransactionRequest> acceptOffer(@Body Integer offerId,
+    Call<TransactionRequest> acceptOffer(@Body OfferId offer_id,
                           @Header("Authorization") String authorization);
     @POST("/offer/reject")
-    Call<TransactionRequest> rejectOffer(@Body Integer offerId,
+    Call<TransactionRequest> rejectOffer(@Body OfferId offer_id,
                              @Header("Authorization") String authorization);
     @POST("/transaction-request")
-    Call<TransactionRequest> newTransactionRequest(@Body Integer offerId,/////////////////////////////////////////////////////////
+    Call<TransactionRequest> newTransactionRequest(@Body TransactionRequest transactionRequest,
                              @Header("Authorization") String authorization);
     @DELETE("/transaction-request")
-    Call<TransactionRequest> deleteTransactionRequest(@Query("request_id") Integer requestId,
+    Call<TransactionRequest> deleteTransactionRequest(@Query("request-id") Integer requestId,
                              @Header("Authorization") String authorization);
     @GET("/transaction-requests")
     Call<List<TransactionRequest>> getTransactionRequests(@Header("Authorization") String authorization);

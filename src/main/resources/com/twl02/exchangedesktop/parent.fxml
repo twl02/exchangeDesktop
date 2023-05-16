@@ -21,7 +21,7 @@
             <Button fx:id="registerButton" styleClass="nav-button"
                     text="Register" onAction="#registerSelected"/>
             <Button fx:id="pendingRequestsButton" styleClass="nav-button"
-                    text="Pending Request" onAction="#pendingRequestsSelected"/>
+                    text="Pending Requests" onAction="#pendingRequestsSelected"/>
             <Button fx:id="offersButton" styleClass="nav-button"
                     text="Pending Offers" onAction="#offersSelected"/>
             <Button fx:id="logoutButton" styleClass="nav-button" text="Logout" onAction="#logoutSelected"/>

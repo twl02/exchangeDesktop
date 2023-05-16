@@ -6,6 +6,8 @@
 }
 .value-label {
     -fx-font-size: 20;
+    -fx-alignment: center;
+    -fx-text-alignment: center;
 }
 .value {
     -fx-font-size: 18;
@@ -13,4 +15,13 @@
 .error-message{
     -fx-font-size: 14;
     -fx-text-fill: red;
+}
+.section{
+    -fx-background-color: white;
+    -fx-border-radius: 10 10 10 10;
+    -fx-background-radius: 10 10 10 10;
+}
+.title{
+    -fx-font-size: 30;
+
 }

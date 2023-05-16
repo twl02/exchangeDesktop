@@ -5,8 +5,11 @@
 <?import javafx.scene.layout.*?>
 
 <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="ALWAYS" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.twl02.exchangedesktop.rates.Rates">
-
-<GridPane alignment="center" hgap="10.0" prefHeight="800.0" prefWidth="480.0" styleClass="root" stylesheets="@rates.css" vgap="10.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane styleClass="root" alignment="CENTER" prefHeight="800.0" prefWidth="480.0" stylesheets="@rates.css" vgap="10.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+    <GridPane alignment="center" hgap="10.0" prefHeight="800.0" GridPane.rowIndex="0" prefWidth="480.0" styleClass="root" stylesheets="@rates.css" vgap="10.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+        <Label styleClass="title" text="SARREF" textAlignment="CENTER" GridPane.columnSpan="2" GridPane.halignment="CENTER" />
+    </GridPane>
+    <GridPane fx:id="addTransactionGridPane" alignment="center" hgap="10.0" prefHeight="800.0" GridPane.rowIndex="1" prefWidth="480.0" styleClass="section" stylesheets="@rates.css" vgap="10.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
     <Label styleClass="header" text="LBP Exchange Rate" textAlignment="CENTER" GridPane.columnSpan="2" GridPane.halignment="CENTER" />
     <Label styleClass="value" text="Buy USD rates" GridPane.columnIndex="0" GridPane.rowIndex="2" />
     <Label fx:id="buyUsdRateLabel" styleClass="value-label" text="Not available" GridPane.columnIndex="0" GridPane.rowIndex="3" />
@@ -22,31 +25,42 @@
             <ToggleGroup fx:id="transactionType" toggles="" />
         </toggleGroup>
     </RadioButton>
-    <RadioButton text="Sell USD" toggleGroup="$transactionType" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+    <RadioButton  text="Sell USD" toggleGroup="$transactionType" GridPane.columnIndex="1" GridPane.rowIndex="7" />
     <Button onAction="#addTransaction" prefHeight="26.0" prefWidth="235.0" text="Add Transaction" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
     <Label fx:id="errorMessage" styleClass="error-message" text="" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="9" />
-    <Separator prefHeight="0.0" prefWidth="457.0" GridPane.RowIndex="10" GridPane.columnIndex="0" GridPane.columnSpan="2" />
-    <Label styleClass="header" text="Calculator" textAlignment="CENTER" GridPane.RowIndex="11" GridPane.columnSpan="2" GridPane.halignment="CENTER" />
-    <TextField fx:id="lbpTextFieldCalc" styleClass="value" GridPane.columnIndex="0" GridPane.rowIndex="13" />
-    <Label fx:id="lbpTextFieldLabelCalc" styleClass="value-label" text="enter LBP" GridPane.columnIndex="0" GridPane.rowIndex="12" />
-    <TextField fx:id="usdTextFieldCalc" styleClass="value" GridPane.columnIndex="1" GridPane.rowIndex="13" />
-    <Label fx:id="usdTextFieldLabelCalc" styleClass="value-label" text="enter USD" GridPane.columnIndex="1" GridPane.rowIndex="12" />
-    <RadioButton text="LBP to USD" GridPane.rowIndex="14">
+</GridPane>
+    <GridPane alignment="center" hgap="10.0" prefHeight="800.0" GridPane.rowIndex="2" prefWidth="480.0" styleClass="section" stylesheets="@rates.css" vgap="10.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+
+
+    <Label styleClass="header" text="Calculator" textAlignment="CENTER" GridPane.RowIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" />
+    <TextField fx:id="lbpTextFieldCalc" styleClass="value" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+    <Label fx:id="lbpTextFieldLabelCalc" styleClass="value-label" text="enter LBP" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+    <TextField fx:id="usdTextFieldCalc" styleClass="value" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+    <Label fx:id="usdTextFieldLabelCalc" styleClass="value-label" text="enter USD" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+    <RadioButton text="LBP to USD" GridPane.rowIndex="4">
         <toggleGroup>
             <ToggleGroup fx:id="transactionTypeCalc" toggles="" />
         </toggleGroup>
     </RadioButton>
-    <RadioButton text="USD to LPB" toggleGroup="$transactionTypeCalc" GridPane.columnIndex="1" GridPane.rowIndex="14" />
-    <Button onAction="#calculateAmount" prefHeight="26.0" prefWidth="235.0" text="Calculate" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="15" />
-    <Separator prefHeight="0.0" prefWidth="457.0" GridPane.RowIndex="16" GridPane.columnIndex="0" GridPane.columnSpan="2" />
-    <Label styleClass="header" text="Graph" textAlignment="CENTER" GridPane.RowIndex="17" GridPane.columnSpan="2" GridPane.halignment="CENTER" />
+    <RadioButton text="USD to LPB" toggleGroup="$transactionTypeCalc" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+    <Button onAction="#calculateAmount" prefHeight="26.0" prefWidth="235.0" text="Calculate" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+        <Label fx:id="errorMessageCalc" styleClass="error-message" text="" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="9" />
+    </GridPane>
+    <GridPane alignment="center" hgap="10.0" prefHeight="800.0" GridPane.rowIndex="3" prefWidth="480.0" styleClass="section" stylesheets="@rates.css" vgap="10.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
 
-    <Label styleClass="value-label" text="Start Date" GridPane.columnIndex="0" GridPane.rowIndex="18" />
-    <Label styleClass="value-label" text="End Date" GridPane.columnIndex="1" GridPane.rowIndex="18" />
-    <DatePicker fx:id="startDatePicker" onAction="#updateGraph" GridPane.RowIndex="19" GridPane.columnIndex="0"/>
-    <DatePicker fx:id="endDatePicker" onAction="#updateGraph" GridPane.RowIndex="19" GridPane.columnIndex="1"/>
+    <Label styleClass="header" text="Graph" textAlignment="CENTER" GridPane.RowIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" />
 
-    <LineChart fx:id="rateChart" prefHeight="300" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="20">
+    <Label styleClass="value-label" text="Start Date" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+    <Label  styleClass="value-label" text="End Date" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+    <DatePicker  fx:id="startDatePicker" onAction="#updateGraph" GridPane.RowIndex="3" GridPane.columnIndex="0"/>
+    <DatePicker fx:id="endDatePicker" onAction="#updateGraph" GridPane.RowIndex="3" GridPane.columnIndex="1"/>
+        <RadioButton fx:id="graphBuyUsdRadioButton" text="Buy USD" GridPane.rowIndex="4" onAction="#updateGraph">
+            <toggleGroup>
+                <ToggleGroup fx:id="transactionTypeGraph" toggles=""/>
+            </toggleGroup>
+        </RadioButton>
+        <RadioButton  text="Sell USD" toggleGroup="$transactionTypeGraph" GridPane.columnIndex="1" GridPane.rowIndex="4" onAction="#updateGraph"/>
+    <LineChart animated = "false" fx:id="rateChart" prefHeight="300" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="5">
         <xAxis>
             <CategoryAxis label="Date" />
         </xAxis>
@@ -54,37 +68,10 @@
             <NumberAxis label="Rate" />
         </yAxis>
     </LineChart>
-<!--      <columnConstraints>-->
-<!--         <ColumnConstraints />-->
-<!--         <ColumnConstraints />-->
-<!--      </columnConstraints>-->
-<!--      <rowConstraints>-->
-<!--         <RowConstraints />-->
-<!--         <RowConstraints />-->
-<!--         <RowConstraints />-->
-<!--         <RowConstraints />-->
-<!--         <RowConstraints />-->
-<!--         <RowConstraints />-->
-<!--         <RowConstraints />-->
-<!--         <RowConstraints />-->
-<!--         <RowConstraints />-->
-<!--         <RowConstraints />-->
-<!--         <RowConstraints />-->
-<!--         <RowConstraints />-->
-<!--         <RowConstraints />-->
-<!--         <RowConstraints />-->
-<!--         <RowConstraints />-->
-<!--         <RowConstraints />-->
-<!--         <RowConstraints />-->
-<!--         <RowConstraints />-->
-<!--         <RowConstraints />-->
-<!--         <RowConstraints />-->
-<!--         <RowConstraints />-->
-<!--      </rowConstraints>-->
-    <Separator prefHeight="0.0" prefWidth="457.0" GridPane.RowIndex="21" GridPane.columnIndex="0" GridPane.columnSpan="2" />
-    <Label styleClass="header" text="Statistics" textAlignment="CENTER" GridPane.RowIndex="22" GridPane.columnSpan="2" GridPane.halignment="CENTER" />
+    <Separator prefHeight="0.0" prefWidth="457.0" GridPane.RowIndex="6" GridPane.columnIndex="0" GridPane.columnSpan="2" />
+    <Label styleClass="header" text="Statistics" textAlignment="CENTER" GridPane.RowIndex="7" GridPane.columnSpan="2" GridPane.halignment="CENTER" />
 
-    <GridPane alignment="center" hgap="10.0" prefWidth="400" vgap="10.0" GridPane.columnSpan="2" GridPane.rowIndex="23" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+    <GridPane alignment="center" hgap="10.0" prefWidth="400" vgap="10.0" GridPane.columnSpan="2" GridPane.rowIndex="8" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
         <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="250" styleClass="value" text="Min" textAlignment="CENTER" GridPane.columnIndex="0" GridPane.rowIndex="1" />
         <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="250" styleClass="value" text="Max" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1" />
         <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="250" styleClass="value" text="Avg" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="1" />
@@ -97,44 +84,8 @@
             <ColumnConstraints minWidth="10.0" percentWidth="33.0" />
             <ColumnConstraints minWidth="10.0" percentWidth="33.0" />
         </columnConstraints>
-
-        <Separator prefHeight="0.0" prefWidth="457.0" GridPane.RowIndex="23" GridPane.columnIndex="0" GridPane.columnSpan="2" />
-
-        <!--        <rowConstraints>-->
-<!--            <RowConstraints />-->
-<!--            <RowConstraints />-->
-<!--            <RowConstraints />-->
-<!--        </rowConstraints>-->
     </GridPane>
-<!--      <columnConstraints>-->
-<!--         <ColumnConstraints />-->
-<!--         <ColumnConstraints />-->
-<!--      </columnConstraints>-->
-<!--      <rowConstraints>-->
-<!--         <RowConstraints />-->
-<!--         <RowConstraints />-->
-<!--         <RowConstraints />-->
-<!--         <RowConstraints />-->
-<!--         <RowConstraints />-->
-<!--         <RowConstraints />-->
-<!--         <RowConstraints />-->
-<!--         <RowConstraints />-->
-<!--         <RowConstraints />-->
-<!--         <RowConstraints />-->
-<!--         <RowConstraints />-->
-<!--         <RowConstraints />-->
-<!--         <RowConstraints />-->
-<!--         <RowConstraints />-->
-<!--         <RowConstraints />-->
-<!--         <RowConstraints />-->
-<!--         <RowConstraints />-->
-<!--         <RowConstraints />-->
-<!--         <RowConstraints />-->
-<!--         <RowConstraints />-->
-<!--         <RowConstraints />-->
-<!--         <RowConstraints />-->
-<!--         <RowConstraints />-->
-<!--         <RowConstraints />-->
-<!--      </rowConstraints>-->
+        <Label fx:id="errorMessageGraph" styleClass="error-message" text="" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="9" />
+</GridPane>
 </GridPane>
 </ScrollPane>

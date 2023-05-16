@@ -2,6 +2,7 @@ package com.twl02.exchangedesktop.rates;
 
 import com.google.gson.Gson;
 import com.twl02.exchangedesktop.Authentication;
+import com.twl02.exchangedesktop.Parent;
 import com.twl02.exchangedesktop.api.ExchangeService;
 import com.twl02.exchangedesktop.api.model.DailyRate;
 //import com.twl02.exchangedesktop.api.model.DateRange;
@@ -13,6 +14,7 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
+import javafx.scene.layout.GridPane;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -43,6 +45,9 @@ public class Rates {
     public ToggleGroup transactionType;
     public DatePicker startDatePicker;
     public DatePicker endDatePicker;
+    public GridPane addTransactionGridPane;
+    public ToggleGroup transactionTypeGraph;
+    public RadioButton graphBuyUsdRadioButton;
 
 //    XYChart.Series<String, Number> series;
 
@@ -50,6 +55,9 @@ public class Rates {
 
 
     public void initialize() {
+        graphBuyUsdRadioButton.setSelected(true);
+        addTransactionGridPane.setVisible(Parent.isAuthenticated() && Parent.isTeller());
+        addTransactionGridPane.setManaged(Parent.isAuthenticated()  && Parent.isTeller());
         fetchRates();
         createGraph();
         initGraph();
@@ -86,7 +94,6 @@ public class Rates {
 
     }
     public void addTransaction(ActionEvent actionEvent) {
-//        updateGraph();
         String usdValue = usdTextField.getText();
         String lbpValue = lbpTextField.getText();
         if(usdValue.isEmpty() || lbpValue.isEmpty()){
@@ -158,8 +165,8 @@ public class Rates {
     }
 
     public void createGraph(){
-        startDatePicker.setValue(LocalDate.now().minusDays(18));
-        endDatePicker.setValue(LocalDate.now().minusDays(12));
+        startDatePicker.setValue(LocalDate.now().minusDays(5));
+        endDatePicker.setValue(LocalDate.now());
         rateChart.setCreateSymbols(false);
 
         Double max = 12.0;
@@ -180,21 +187,21 @@ public class Rates {
 
         ExchangeService.exchangeApi().getDailyRates(formatter.format(startDay), formatter.format(endDay)).enqueue(new
                                                                                                                           Callback<List<DailyRate>>() {
-                                                                                                                              @Override
-                                                                                                                              public void onResponse(Call<List<DailyRate>> call,
-                                                                                                                                                     Response<List<DailyRate>> response) {
+          @Override
+          public void onResponse(Call<List<DailyRate>> call,
+                                 Response<List<DailyRate>> response) {
 
 
-                                                                                                                                  List<DailyRate> dailyRates = response.body();
-                                                                                                                                  Platform.runLater(() -> addSeriesToGraph(dailyRates));
+              List<DailyRate> dailyRates = response.body();
+              Platform.runLater(() -> addSeriesToGraph(dailyRates));
 //                     rateChart.getData().add(createSeries(response.body()));
-                                                                                                                              }
-                                                                                                                              @Override
-                                                                                                                              public void onFailure(Call<List<DailyRate>> call,
-                                                                                                                                                    Throwable throwable) {
-                                                                                                                                  System.out.println("We've got a problem here");
-                                                                                                                              }
-                                                                                                                          });
+          }
+          @Override
+          public void onFailure(Call<List<DailyRate>> call,
+                                Throwable throwable) {
+              System.out.println("We've got a problem here");
+          }
+      });
 //        rateChart.getData().add(series);
 
     }
@@ -215,7 +222,6 @@ public class Rates {
 
                      List<DailyRate> dailyRates = response.body();
                      Platform.runLater(() -> addSeriesToGraph(dailyRates));
-//                     rateChart.getData().add(createSeries(response.body()));
                  }
                  @Override
                  public void onFailure(Call<List<DailyRate>> call,
@@ -223,7 +229,6 @@ public class Rates {
                      System.out.println("We've got a problem here");
                  }
              });
-//        rateChart.getData().add(series);
 
     }
 
@@ -234,17 +239,20 @@ public class Rates {
     }
 
     private void addSeriesToGraph(List<DailyRate> rates) {   //XYChart.Series<String, Number>
-//        rateChart.getData().set();
+      Boolean buyUsd = ((RadioButton)transactionTypeGraph.getSelectedToggle()).getText().equals("Buy USD");
+        System.out.println(buyUsd);
         XYChart.Series<String, Number> series = new XYChart.Series<>();
         DateFormat formatter = new SimpleDateFormat("MMM dd yyyy");
 
         if(rates != null) {
             for (DailyRate rate : rates) {
-                series.getData().add(new XYChart.Data<>(formatter.format(rate.day), rate.buyUsdAvg));
+                series.getData().add(new XYChart.Data<>(formatter.format(rate.day), buyUsd?rate.buyUsdAvg:rate.sellUsdAvg));
             }
             series.setName("Average");
             DailyRate rate = rates.get(rates.size()-1);
-            setStatistics(rate.buyUsdMin,rate.buyUsdMax,rate.buyUsdAvg);
+            setStatistics(buyUsd?rate.buyUsdMin:rate.sellUsdMin,
+                    buyUsd?rate.buyUsdMax:rate.sellUsdMax,
+                    buyUsd?rate.buyUsdAvg:rate.sellUsdAvg);
         }
         if(rateChart.getData().isEmpty()){
             rateChart.getData().add(series);
